@@ -1,0 +1,41 @@
+@use "@/assets/styles/abstracts/mixins" as *;
+
+.paragraph-sm {
+  @include font-style(14px, 400, 18px);
+}
+
+.title-md {
+  @include font-style(16px, 500, 24px);
+}
+
+.title-lg {
+  @include font-style(18px, 600, 24px);
+}
+
+.title-xl {
+  @include font-style(22px, 600, 28px);
+}
+
+.label-md {
+  @include font-style(16px, 400, 18px);
+}
+
+.badge-font {
+  @include font-style(12px, 700, 14px);
+}
+
+.counter-font {
+  @include font-style(15px, 400, 24px);
+}
+
+.price-lg {
+  @include font-style(18px, 500, 24px);
+}
+
+.price-sm {
+  @include font-style(14px, 500, 24px);
+}
+
+.button-tight {
+  @include font-style(16px, 500, 18px);
+}
