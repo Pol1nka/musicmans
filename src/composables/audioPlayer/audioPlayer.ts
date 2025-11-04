@@ -1,13 +1,17 @@
 import { computed, readonly, ref } from "vue";
 
 interface Track {
-  id: number;
-  title: string;
-  artist: string;
-  duration: string;
-  bpm: number;
-  tags: string[];
+  author: string;
+  created_at: string;
+  description: string;
   download_url: string;
+  duration: number;
+  genre: string;
+  id: number;
+  pack_id: number;
+  size: number;
+  title: string;
+  updated_at: string;
 }
 
 const currentTrack = ref<Track | null>(null);
@@ -18,6 +22,10 @@ const currentTime = ref(0);
 const duration = ref(0);
 const volume = ref(1);
 const error = ref<string | null>(null);
+
+//список всех треков и текущий индекс
+const playlist = ref<Track[]>([]);
+const currentTrackIndex = ref(-1);
 
 export const useAudioPlayer = () => {
   //TODO: потом вынести в хелперы
@@ -33,6 +41,12 @@ export const useAudioPlayer = () => {
   const progress = computed(() => {
     if (!duration.value) return 0;
     return (currentTime.value / duration.value) * 100;
+  });
+
+  //проверка наличия prev/next треков
+  const hasPrevTrack = computed(() => currentTrackIndex.value > 0);
+  const hasNextTrack = computed(() => {
+    return currentTrackIndex.value >= 0 && currentTrackIndex.value < playlist.value.length - 1;
   });
 
   const cleanup = () => {
@@ -64,6 +78,11 @@ export const useAudioPlayer = () => {
   const handleEnded = () => {
     isPlaying.value = false;
     currentTime.value = 0;
+
+    // НОВОЕ: Автоматически играем следующий трек
+    if (hasNextTrack.value) {
+      playNextTrack();
+    }
   };
 
   const handleError = (e: Event) => {
@@ -93,6 +112,16 @@ export const useAudioPlayer = () => {
     isPlaying.value = false;
   };
 
+  // установка плейлиста
+  const setPlaylist = (tracks: Track[]) => {
+    playlist.value = tracks;
+  };
+
+  // найти индекс трека в плейлисте
+  const findTrackIndex = (trackId: number): number => {
+    return playlist.value.findIndex((track) => track.id === trackId);
+  };
+
   // Загрузка аудио (БЕЗ fetch - url напрямую)
   const loadTrack = async (track: Track): Promise<void> => {
     try {
@@ -105,6 +134,8 @@ export const useAudioPlayer = () => {
       cleanup();
 
       currentTrack.value = track;
+
+      currentTrackIndex.value = findTrackIndex(track.id);
 
       console.log("Loading track:", track.title, track.download_url);
 
@@ -124,7 +155,7 @@ export const useAudioPlayer = () => {
       await new Promise<void>((resolve, reject) => {
         const timeout = setTimeout(() => {
           reject(new Error("Timeout loading audio metadata"));
-        }, 10000); // 10 секунд таймаут
+        }, 5000);
 
         const onLoad = () => {
           clearTimeout(timeout);
@@ -186,6 +217,26 @@ export const useAudioPlayer = () => {
     }
   };
 
+  // предыдущий трек
+  const playPrevTrack = async (): Promise<void> => {
+    if (!hasPrevTrack.value) return;
+
+    const prevTrack = playlist.value[currentTrackIndex.value - 1];
+    if (prevTrack) {
+      await playTrack(prevTrack);
+    }
+  };
+
+  // следующий трек
+  const playNextTrack = async (): Promise<void> => {
+    if (!hasNextTrack.value) return;
+
+    const nextTrack = playlist.value[currentTrackIndex.value + 1];
+    if (nextTrack) {
+      await playTrack(nextTrack);
+    }
+  };
+
   const seek = (timeInSeconds: number) => {
     if (!audio.value) return;
     audio.value.currentTime = timeInSeconds;
@@ -221,16 +272,21 @@ export const useAudioPlayer = () => {
     duration: readonly(duration),
     volume: readonly(volume),
     error: readonly(error),
+    hasPrevTrack: readonly(hasPrevTrack),
+    hasNextTrack: readonly(hasNextTrack),
 
     formattedCurrentTime,
     formattedDuration,
     progress,
 
+    setPlaylist,
     loadTrack,
     play,
     pause,
     togglePlay,
     playTrack,
+    playPrevTrack,
+    playNextTrack,
     seek,
     seekToPercent,
     setVolume,

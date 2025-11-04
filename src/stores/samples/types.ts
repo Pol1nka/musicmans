@@ -5,8 +5,8 @@ export interface ISampleTile {
   download_url: string;
   duration: number;
   genre: string;
-  id: string;
-  pack_id: string;
+  id: number;
+  pack_id: number;
   size: number;
   title: string;
   updated_at: string;

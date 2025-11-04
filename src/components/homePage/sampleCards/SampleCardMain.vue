@@ -1,5 +1,5 @@
 <template>
-  <div class="sample-card d-flex p-16 flex-column gap-16">
+  <div class="sample-card d-flex p-16 flex-column gap-10 jc-between">
     <div
       class="waveform-container"
       @click="handleCardClick"
@@ -80,7 +80,7 @@ const { isTrackPlaying, isTrackCurrent, isLoading, playTrack, togglePlay } = use
 
 // Computed
 const waveformData = computed(() => {
-  return Array.from({ length: 40 }, () => Math.random() * 100);
+  return Array.from({ length: 25 }, () => Math.random() * 100);
 });
 
 const isCurrentTrackPlaying = computed(() => {
@@ -200,7 +200,7 @@ const handleDownload = () => {
 }
 
 .waveform-bar {
-  width: 0.25rem;
+  width: 3px;
   border-radius: 9999px;
 
   opacity: 0.8;
@@ -210,14 +210,27 @@ const handleDownload = () => {
 }
 
 .track-title {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+
   font-size: 16px;
   font-weight: 600;
   color: white;
 }
 
 .track-artist {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+
+  margin: 0;
+
   font-size: 14px;
   color: rgb(143 151 163);
+  text-overflow: ellipsis;
 }
 
 .track-meta {

@@ -10,10 +10,10 @@
         <!-- Waveform mini или обложка -->
         <div class="mini-waveform">
           <div
-            v-for="i in 20"
+            v-for="i in 15"
             :key="i"
             class="mini-bar"
-            :style="{ height: `${Math.random() * 100}%` }"
+            :style="{ height: `${Math.random() * 90}%` }"
           />
         </div>
       </div>
@@ -31,6 +31,7 @@
       <div class="d-flex ai-center gap-10">
         <button
           class="control-btn"
+          :disabled="!hasPrevTrack"
           @click="handlePrev"
         >
           <previous-track-icon />
@@ -49,6 +50,7 @@
 
         <button
           class="control-btn"
+          :disabled="!hasNextTrack"
           @click="handleNext"
         >
           <next-track-icon />
@@ -127,7 +129,11 @@ const {
   formattedDuration,
   progress,
   volume,
+  hasPrevTrack,
+  hasNextTrack,
   togglePlay,
+  playPrevTrack,
+  playNextTrack,
   seekToPercent,
   setVolume,
 } = useAudioPlayer();
@@ -157,14 +163,12 @@ const toggleMute = () => {
   }
 };
 
-const handlePrev = () => {
-  console.log("Previous track");
-  // TODO: Реализовать переключение на предыдущий трек
+const handlePrev = async () => {
+  await playPrevTrack();
 };
 
-const handleNext = () => {
-  console.log("Next track");
-  // TODO: Реализовать переключение на следующий трек
+const handleNext = async () => {
+  await playNextTrack();
 };
 </script>
 
