@@ -31,7 +31,7 @@
       </div>
       <!--блок с длительностью и размером-->
       <div class="track-meta d-flex ai-center jc-between">
-        <span>{{ sample.duration }}</span>
+        <span>{{ trackDuration }}</span>
 
         <span> {{ sample.size }} size </span>
       </div>
@@ -72,13 +72,13 @@ import { computed } from "vue";
 import { useAudioPlayer } from "@/composables/audioPlayer/audioPlayer.ts";
 
 import type { IEmits, IProps } from "./types.ts";
+import { formatTime } from "@/composables/audioPlayer/helplers.ts";
 
 const props = defineProps<IProps>();
 const emit = defineEmits<IEmits>();
 
 const { isTrackPlaying, isTrackCurrent, isLoading, playTrack, togglePlay } = useAudioPlayer();
 
-// Computed
 const waveformData = computed(() => {
   return Array.from({ length: 25 }, () => Math.random() * 100);
 });
@@ -91,13 +91,12 @@ const isCurrentTrackLoading = computed(() => {
   return isTrackCurrent(props.sample.id) && isLoading.value;
 });
 
-// Methods
+const trackDuration = computed(() => formatTime(props.sample.duration));
+
 const handleCardClick = async () => {
-  // Если этот трек уже загружен - просто toggle
   if (isTrackCurrent(props.sample.id)) {
     await togglePlay();
   } else {
-    // Иначе загружаем и играем новый трек
     await playTrack(props.sample);
   }
 };

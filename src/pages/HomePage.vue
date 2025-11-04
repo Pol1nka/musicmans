@@ -7,7 +7,7 @@
 
     <div class="cards-container">
       <sample-card-main
-        v-for="sample in samples"
+        v-for="sample in filteredSamples"
         :key="sample.id"
         :sample
       />
@@ -23,7 +23,7 @@ import { storeToRefs } from "pinia";
 import SampleCardMain from "@/components/homePage/sampleCards/SampleCardMain.vue";
 
 const samplesStore = useSamplesStore();
-const { samples } = storeToRefs(samplesStore);
+const { filteredSamples } = storeToRefs(samplesStore);
 const { getSamples } = samplesStore;
 
 onBeforeMount(async () => {

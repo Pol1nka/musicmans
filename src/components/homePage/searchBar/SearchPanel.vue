@@ -3,7 +3,7 @@
     <div class="d-flex">
       <ui-input
         id="login-auth"
-        v-model="login"
+        v-model="filters.searchQuery"
         class="search-input"
         name="login"
         type="text"
@@ -15,8 +15,9 @@
 
     <div class="d-flex gap-24">
       <custom-select
-        v-model="genreFilter"
+        v-model="filters.genre"
         option-label="name"
+        option-value="value"
         placeholder="Жанр"
         class="w-full md:w-56"
         style="
@@ -28,14 +29,13 @@
           border: 1px solid rgb(42 54 70);
           border-radius: 10px;
 
-          color: rgb(255 255 255);
-
           background-color: rgb(31 41 55);
         "
         :options="allCategories"
       />
 
       <button
+        v-if="filters.genre"
         class="submit-btn text-only"
         @click="$resetFilters"
       >
@@ -51,9 +51,10 @@ import LoupeIcon from "@/assets/icons/LoupeIcon.vue";
 
 import { storeToRefs } from "pinia";
 import { useSamplesStore } from "@/stores/samples/store.ts";
+import { allCategories } from "@/composables/searchFilters/constants.ts";
 
 const samplesStore = useSamplesStore();
-const { genreFilter } = storeToRefs(samplesStore);
+const { filters } = storeToRefs(samplesStore);
 const { $resetFilters } = samplesStore;
 </script>
 
@@ -124,8 +125,8 @@ const { $resetFilters } = samplesStore;
   }
 }
 
-.p-select-label.p-placeholder {
-  color: white !important;
+:deep(.p-select) {
+  --p-select-color: #fff !important;
 }
 
 .p-select.p-focus {
