@@ -220,6 +220,10 @@ const togglePasswordVisibility = () => {
       -webkit-appearance: none;
     }
 
+    &:focus {
+      border: 3px double var(--accent-color);
+    }
+
     &:focus,
     &:not(:placeholder-shown) {
       padding: 24px 46px 8px;

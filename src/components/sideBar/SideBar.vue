@@ -62,4 +62,10 @@ withDefaults(defineProps<ISideBar>(), {
 .sidebar {
   background-color: var(--sidebar-background);
 }
+
+@media screen and (width <= 1100px) {
+  .logo-container {
+    width: 250px;
+  }
+}
 </style>

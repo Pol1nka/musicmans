@@ -76,8 +76,20 @@ input::-webkit-inner-spin-button {
   gap: 24px;
 }
 
+.gap-32 {
+  gap: 32px;
+}
+
+.gap-64 {
+  gap: 64px;
+}
+
 .gap-16 {
   gap: 16px;
+}
+
+.gap-12 {
+  gap: 12px;
 }
 
 .gap-10 {
@@ -114,6 +126,10 @@ input::-webkit-inner-spin-button {
 
 .ai-start {
   align-items: flex-start;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
 }
 
 .text-overflow {
