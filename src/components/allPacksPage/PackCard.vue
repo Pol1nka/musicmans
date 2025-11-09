@@ -1,111 +1,61 @@
 <template>
-  <div class="sample-card d-flex p-16 flex-column gap-10 jc-between">
-    <div
-      class="waveform-container"
-      @click="handleCardClick"
-    >
-      <!-- Затемнение и кнопка при наведении -->
+  <div
+    class="sample-card d-flex p-16 flex-column gap-10 jc-between"
+    @click="handleCardClick"
+  >
+    <div class="waveform-container">
       <div class="waveform-overlay">
-        <button class="play-button">
-          <play-icon v-if="!isCurrentTrackPlaying" />
-
-          <pause-icon v-else />
-        </button>
+        <pack-icon />
       </div>
-
-      <div
-        v-for="(height, index) in waveformData"
-        :key="index"
-        class="waveform-bar"
-        :class="{ 'waveform-bar-playing': isCurrentTrackPlaying }"
-        :style="{ height: `${height}%` }"
-      />
     </div>
 
     <!--    блок с текстом карточки-->
     <div class="d-flex flex-column gap-12">
       <div class="d-flex flex-column">
-        <h3 class="track-title">{{ sample.title }}</h3>
+        <h3 class="track-title">{{ pack.name }}</h3>
 
-        <p class="track-artist">{{ sample.author }}</p>
+        <p class="track-artist">{{ pack.author }}</p>
       </div>
       <!--блок с длительностью и размером-->
       <div class="track-meta d-flex ai-center jc-between">
-        <span>{{ trackDuration }}</span>
+        <!--        <span>{{ trackDuration }}</span>-->
 
-        <span> {{ formatTrackSize }} </span>
+        <!--        <span> {{ sample.size }} size </span>-->
       </div>
     </div>
 
     <!--    блок с тегами (жанром в нашем случае)-->
     <div class="card-tags d-flex gap-8">
-      <genre-tag :text-genre="sample.genre" />
+      <genre-tag :text-genre="pack.genre" />
     </div>
 
     <!--    действия-->
     <div class="d-flex ai-center jc-end">
       <button
-        class="submit-btn outline"
+        class="play-pack-btn outline"
         @click="handleDownload"
       >
-        <download-icon />
-        Скачать
+        <play-icon />
       </button>
-    </div>
-
-    <!-- спиннер -->
-    <div
-      v-if="isCurrentTrackLoading"
-      class="loading-overlay"
-    >
-      <div class="spinner"></div>
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
 import GenreTag from "@/components/homePage/sampleCards/GenreTag.vue";
-import DownloadIcon from "@/assets/icons/DownloadIcon.vue";
+import PackIcon from "@/assets/icons/PackIcon.vue";
 import PlayIcon from "@/assets/icons/PlayIcon.vue";
-import PauseIcon from "@/assets/icons/PauseIcon.vue";
 
-import { computed } from "vue";
-import { useAudioPlayer } from "@/composables/audioPlayer/audioPlayer.ts";
-
-import type { IEmits, IProps } from "./types.ts";
-import { formatFileSize, formatTime } from "@/composables/audioPlayer/helplers.ts";
+import router from "@/router";
+import type { IProps } from "@/components/allPacksPage/types.ts";
 
 const props = defineProps<IProps>();
-const emit = defineEmits<IEmits>();
-
-const { isTrackPlaying, isTrackCurrent, isLoading, playTrack, togglePlay } = useAudioPlayer();
-
-const waveformData = computed(() => {
-  return Array.from({ length: 25 }, () => Math.random() * 100);
-});
-
-const isCurrentTrackPlaying = computed(() => {
-  return isTrackPlaying(props.sample.id);
-});
-
-const isCurrentTrackLoading = computed(() => {
-  return isTrackCurrent(props.sample.id) && isLoading.value;
-});
-
-const formatTrackSize = computed(() => formatFileSize(props.sample.size));
-
-const trackDuration = computed(() => formatTime(props.sample.duration));
 
 const handleCardClick = async () => {
-  if (isTrackCurrent(props.sample.id)) {
-    await togglePlay();
-  } else {
-    await playTrack(props.sample);
-  }
+  await router.push({ name: "pack", params: { id: props.pack.id } });
 };
 
-const handleDownload = () => {
-  emit("download");
-};
+const handleDownload = async () => {};
 </script>
 
 <style scoped lang="scss">
@@ -118,10 +68,11 @@ const handleDownload = () => {
   align-items: center;
   justify-content: center;
 
-  opacity: 0;
-  background: rgb(0 0 0 / 40%);
-
   transition: opacity 0.3s ease;
+
+  svg {
+    stroke: var(--accent-color);
+  }
 }
 
 .waveform-container {
@@ -135,16 +86,24 @@ const handleDownload = () => {
   align-items: flex-end;
   justify-content: center;
 
-  height: 80px;
+  height: 100px;
   padding: 1.5rem;
   border-radius: 0.75rem;
 
-  background: rgb(51 65 85 / 50%);
+  opacity: 0.4;
+  background: linear-gradient(
+    90deg,
+    rgb(42 123 155 / 100%) 0%,
+    rgb(87 199 133 / 100%) 100%,
+    rgb(237 221 83 / 100%) 100%
+  );
 
   transition: background 0.3s ease;
 }
 
 .sample-card {
+  cursor: pointer;
+
   position: relative;
 
   box-sizing: border-box;
@@ -162,7 +121,7 @@ const handleDownload = () => {
   }
 
   &:hover .waveform-container {
-    background: rgb(51 65 85 / 70%);
+    opacity: 0.6;
   }
 
   &:hover .waveform-overlay {
@@ -257,11 +216,12 @@ const handleDownload = () => {
   }
 }
 
-.submit-btn {
-  height: 40px;
+.play-pack-btn {
+  width: 50px;
+  height: 50px;
   padding: 0 12px;
   border: none;
-  border-radius: 10px;
+  border-radius: 50%;
 
   font-size: 14px;
   font-weight: 500;
@@ -277,9 +237,8 @@ const handleDownload = () => {
   }
 
   &.outline {
-    border: 1px solid var(--accent-color);
-    color: var(--accent-color);
-    background-color: transparent;
+    color: var(--dark-text);
+    background-color: var(--accent-color);
     transition: all 0.1s linear;
 
     &:hover {

@@ -1,6 +1,11 @@
 <template>
   <div class="d-flex h-100 flex-column p-24 gap-8 sidebar">
-    <div class="d-flex ai-center jc-center logo-container">Тут будет логотип :)</div>
+    <div
+      class="d-flex ai-center jc-center logo-container"
+      @click="goToMainPage"
+    >
+      <logo-component />
+    </div>
 
     <nav-chapter title="ОБЗОР" />
 
@@ -9,6 +14,13 @@
       route-name="home"
     >
       <i class="bi bi-house" />
+    </nav-item>
+
+    <nav-item
+      title="Паки звуков"
+      route-name="packs"
+    >
+      <i class="bi bi-box" />
     </nav-item>
 
     <nav-item
@@ -36,7 +48,7 @@
 
     <nav-item
       title="Аккаунт"
-      route-name="account"
+      route-name="profile"
     >
       <i class="bi bi-person-circle" />
     </nav-item>
@@ -46,17 +58,30 @@
 <script setup lang="ts">
 import NavItem from "@/components/sideBar/NavItem.vue";
 import NavChapter from "@/components/sideBar/NavChapter.vue";
+import logoComponent from "@/assets/icons/logoStartIcon.vue";
+
+import router from "@/router";
+
 import type { ISideBar } from "@/components/sideBar/types.ts";
 
 withDefaults(defineProps<ISideBar>(), {
   width: "350px",
 });
+
+const goToMainPage = async () => {
+  await router.push({ name: "home" });
+};
 </script>
 <style scoped>
 .logo-container {
+  cursor: pointer;
   width: v-bind(width);
   height: 100px;
-  background: rgb(255 255 255 / 20%);
+  color: white;
+
+  svg {
+    fill: var(--accent-color);
+  }
 }
 
 .sidebar {

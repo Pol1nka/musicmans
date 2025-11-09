@@ -16,6 +16,6 @@ export interface IToken {
 
 export interface IUserProfile {
   login: string;
-  subscribe_status: true;
+  tokens: number;
   uuid: string;
 }

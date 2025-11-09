@@ -1,8 +1,11 @@
 import HomePage from "@/pages/HomePage.vue";
 import RegisterPage from "@/pages/auth/RegisterPage.vue";
 import LoginPage from "@/pages/login/LoginPage.vue";
+import PackPage from "@/pages/pack/PackPage.vue";
+import AllPacksPage from "@/pages/allPacks/AllPacksPage.vue";
 
 import type { RouteRecordRaw } from "vue-router";
+import ProfilePage from "@/pages/profile/ProfilePage.vue";
 
 export const routesConfig: Array<RouteRecordRaw> = [
   {
@@ -21,6 +24,24 @@ export const routesConfig: Array<RouteRecordRaw> = [
     path: "/login",
     name: "login",
     component: LoginPage,
+    beforeEnter: async () => {},
+  },
+  {
+    path: "/packs",
+    name: "packs",
+    component: AllPacksPage,
+    beforeEnter: async () => {},
+  },
+  {
+    path: "/pack/:id",
+    name: "pack",
+    component: PackPage,
+    beforeEnter: async () => {},
+  },
+  {
+    path: "/profile",
+    name: "profile",
+    component: ProfilePage,
     beforeEnter: async () => {},
   },
 ];

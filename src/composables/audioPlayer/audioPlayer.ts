@@ -8,8 +8,8 @@ interface Track {
   download_url: string;
   duration: number;
   genre: string;
-  id: number;
-  pack_id: number;
+  id: string;
+  pack_id: string;
   size: number;
   title: string;
   updated_at: string;
@@ -21,7 +21,7 @@ const isPlaying = ref(false);
 const isLoading = ref(false);
 const currentTime = ref(0);
 const duration = ref(0);
-const volume = ref(1);
+const volume = ref(0.2);
 const error = ref<string | null>(null);
 
 //список всех треков и текущий индекс
@@ -111,7 +111,7 @@ export const useAudioPlayer = () => {
   };
 
   // найти индекс трека в плейлисте
-  const findTrackIndex = (trackId: number): number => {
+  const findTrackIndex = (trackId: string): number => {
     return playlist.value.findIndex((track) => track.id === trackId);
   };
 
@@ -248,11 +248,11 @@ export const useAudioPlayer = () => {
     }
   };
 
-  const isTrackPlaying = (trackId: number): boolean => {
+  const isTrackPlaying = (trackId: string): boolean => {
     return currentTrack.value?.id === trackId && isPlaying.value;
   };
 
-  const isTrackCurrent = (trackId: number): boolean => {
+  const isTrackCurrent = (trackId: string): boolean => {
     return currentTrack.value?.id === trackId;
   };
 

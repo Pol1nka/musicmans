@@ -1,35 +1,35 @@
 <template>
   <page-content
-    title="Откройте Удивительные Семплы"
+    title="Популярные паки"
     description="Профессиональные музыкальные семплы для продюсеров и создателей"
   >
-    <search-panel />
+    <search-packs-panel />
 
     <div class="cards-container">
-      <sample-card-main
-        v-for="sample in filteredSamples"
-        :key="sample.id"
-        :sample
+      <pack-card
+        v-for="pack in filteredPacks"
+        :key="pack.id"
+        :pack
       />
     </div>
   </page-content>
 </template>
 
 <script setup lang="ts">
-import SearchPanel from "@/components/homePage/searchBar/SearchPanel.vue";
+import SearchPacksPanel from "@/components/allPacksPage/SearchPacksPanel.vue";
 import PageContent from "@/components/pageContent/PageContent.vue";
-import SampleCardMain from "@/components/homePage/sampleCards/SampleCardMain.vue";
+import PackCard from "@/components/allPacksPage/PackCard.vue";
 
 import { onBeforeMount } from "vue";
 import { storeToRefs } from "pinia";
-import { useSamplesStore } from "@/stores/samples/store.ts";
+import { usePacksStore } from "@/stores/packs/store.ts";
 
-const samplesStore = useSamplesStore();
-const { filteredSamples } = storeToRefs(samplesStore);
-const { getSamples } = samplesStore;
+const packsStore = usePacksStore();
+const { filteredPacks } = storeToRefs(packsStore);
+const { getAllPacks } = packsStore;
 
 onBeforeMount(async () => {
-  await getSamples();
+  await getAllPacks();
 });
 </script>
 

@@ -1,5 +1,13 @@
 export interface IUserData {
   login: string;
-  subscribe_status: boolean;
+  tokens: number;
   uuid: string;
+}
+
+export interface IUserPayment {
+  amount: number;
+  created_at: string;
+  description: string;
+  id: string;
+  payment_status: string;
 }

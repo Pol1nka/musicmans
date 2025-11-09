@@ -15,10 +15,11 @@
 <script setup lang="ts">
 import router from "@/router";
 
-import type { INavItem } from "@/components/sideBar/types.ts";
-import { useAppStore } from "@/stores/app/store.ts";
-import { storeToRefs } from "pinia";
 import { computed } from "vue";
+import { storeToRefs } from "pinia";
+import { useAppStore } from "@/stores/app/store.ts";
+
+import type { INavItem } from "@/components/sideBar/types.ts";
 
 const props = defineProps<INavItem>();
 

@@ -124,6 +124,11 @@ input::-webkit-inner-spin-button {
   align-items: center;
 }
 
+.ai-end {
+  align-items: flex-end;
+}
+
+
 .ai-start {
   align-items: flex-start;
 }
@@ -157,4 +162,57 @@ input::-webkit-inner-spin-button {
 
 .select-none {
   user-select: none;
+}
+
+/* Переопределение классов для колонок в таблице */
+.col-1 {
+  width: calc(100% * (1 / 12)) !important;
+}
+
+.col-2 {
+  width: calc(100% * (2 / 12)) !important;
+}
+
+.col-3 {
+  width: calc(100% * (3 / 12)) !important;
+}
+
+.col-4 {
+  width: calc(100% * (4 / 12)) !important;
+}
+
+.col-5 {
+  width: calc(100% * (5 / 12)) !important;
+}
+
+.col-6 {
+  width: calc(100% * (6 / 12)) !important;
+}
+
+.col-7 {
+  width: calc(100% * (7 / 12)) !important;
+}
+
+.col-8 {
+  width: calc(100% * (8 / 12)) !important;
+}
+
+.col-9 {
+  width: calc(100% * (9 / 12)) !important;
+}
+
+.col-10 {
+  width: calc(100% * (10 / 12)) !important;
+}
+
+.col-11 {
+  width: calc(100% * (11 / 12)) !important;
+}
+
+.col-12 {
+  width: calc(100% * (12 / 12)) !important;
+}
+
+.align-middle {
+  vertical-align: middle !important
 }
