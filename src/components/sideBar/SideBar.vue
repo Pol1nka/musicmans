@@ -23,12 +23,12 @@
       <i class="bi bi-box" />
     </nav-item>
 
-    <nav-item
-      title="Моя библиотека"
-      route-name="library"
-    >
-      <i class="bi bi-journal-bookmark-fill" />
-    </nav-item>
+    <!--    <nav-item-->
+    <!--      title="Моя библиотека"-->
+    <!--      route-name="library"-->
+    <!--    >-->
+    <!--      <i class="bi bi-journal-bookmark-fill" />-->
+    <!--    </nav-item>-->
 
     <nav-item
       title="Загрузить"
@@ -37,14 +37,16 @@
       <i class="bi bi-upload" />
     </nav-item>
 
-    <nav-chapter title="АККАУНТ" />
+    <nav-chapter title="ТОКЕНЫ" />
 
     <nav-item
-      title="Настройки"
-      route-name="settings"
+      title="Токены"
+      route-name="plans"
     >
-      <i class="bi bi-gear" />
+      <i class="bi bi-currency-exchange" />
     </nav-item>
+
+    <nav-chapter title="АККАУНТ" />
 
     <nav-item
       title="Аккаунт"

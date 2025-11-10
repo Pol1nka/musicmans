@@ -19,3 +19,8 @@ export interface IUserProfile {
   tokens: number;
   uuid: string;
 }
+
+export interface INewPayment {
+  amount: number;
+  return_uri: string;
+}

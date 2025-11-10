@@ -1,4 +1,4 @@
-type TRoutes = "home" | "library" | "settings" | "upload" | "profile" | "packs";
+type TRoutes = "home" | "library" | "settings" | "upload" | "profile" | "packs" | "plans";
 
 export interface INavItem {
   title: string;

@@ -44,7 +44,8 @@ export const formatDate = (
   { showDate = true, showTime = true } = { showDate: true, showTime: true },
 ) => {
   const date = new Date(stringDate);
-
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
   if (!(date instanceof Date && !isNaN(date))) {
     return "-";
   }
@@ -60,3 +61,72 @@ export const formatDate = (
 
   return `${showDate ? resultDate : ""} ${showTime ? resultTime : ""}`;
 };
+
+/**
+ * Конвертирует копейки в рубли с форматированием
+ * @param kopecks - сумма в копейках
+ * @param showCurrency - показывать ли символ рубля (по умолчанию true)
+ * @returns отформатированная строка
+ *
+ * @example
+ * formatRubles(10000) // "100 ₽"
+ * formatRubles(15050) // "150.50 ₽"
+ * formatRubles(99) // "0.99 ₽"
+ * formatRubles(10000, false) // "100"
+ */
+export const formatRubles = (kopecks: number, showCurrency: boolean = true): string => {
+  const rubles = kopecks / 100;
+  const hasKopecks = kopecks % 100 !== 0; // Проверяем есть ли копейки
+
+  // Число с пробелами для разрядов
+  const formatted = rubles.toLocaleString("ru-RU", {
+    minimumFractionDigits: hasKopecks ? 2 : 0, // Если есть копейки - 2 знака, иначе 0
+    maximumFractionDigits: 2,
+  });
+
+  return showCurrency ? `${formatted} ₽` : formatted;
+};
+
+//другое
+// /**
+//  * Конвертирует копейки в рубли (просто число)
+//  * @param kopecks - сумма в копейках
+//  * @returns число в рублях
+//  *
+//  * @example
+//  * kopecksToRubles(10000) // 100
+//  * kopecksToRubles(15050) // 150.5
+//  */
+// export const kopecksToRubles = (kopecks: number): number => {
+//   return kopecks / 100;
+// };
+//
+// /**
+//  * Конвертирует рубли в копейки
+//  * @param rubles - сумма в рублях
+//  * @returns число в копейках
+//  *
+//  * @example
+//  * rublesToKopecks(100) // 10000
+//  * rublesToKopecks(150.5) // 15050
+//  */
+// export const rublesToKopecks = (rubles: number): number => {
+//   return Math.round(rubles * 100);
+// };
+//
+// /**
+//  * Форматирует рубли с пробелами для тысяч (без копеек)
+//  * @param kopecks - сумма в копейках
+//  * @returns отформатированная строка
+//  *
+//  * @example
+//  * formatRublesShort(1000000) // "10 000 ₽"
+//  * formatRublesShort(150000) // "1 500 ₽"
+//  */
+// export const formatRublesShort = (kopecks: number): string => {
+//   const rubles = Math.floor(kopecks / 100);
+//
+//   const formatted = rubles.toLocaleString('ru-RU');
+//
+//   return `${formatted} ₽`;
+// };

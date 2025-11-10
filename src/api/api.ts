@@ -4,6 +4,7 @@ import { authApi } from "@/api/endpoints/auth.ts";
 import { userApi } from "@/api/endpoints/user.ts";
 import { samplesApi } from "@/api/endpoints/samples.ts";
 import { packsApi } from "@/api/endpoints/packs.ts";
+import { paymentApi } from "@/api/payment.ts";
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -27,4 +28,5 @@ export const externalApi = {
   ...userApi(instance),
   ...samplesApi(instance),
   ...packsApi(instance),
+  ...paymentApi(instance),
 };

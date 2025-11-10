@@ -3,9 +3,10 @@ import RegisterPage from "@/pages/auth/RegisterPage.vue";
 import LoginPage from "@/pages/login/LoginPage.vue";
 import PackPage from "@/pages/pack/PackPage.vue";
 import AllPacksPage from "@/pages/allPacks/AllPacksPage.vue";
+import ProfilePage from "@/pages/profile/ProfilePage.vue";
+import BuyTokenPage from "@/pages/payment/BuyTokenPage.vue";
 
 import type { RouteRecordRaw } from "vue-router";
-import ProfilePage from "@/pages/profile/ProfilePage.vue";
 
 export const routesConfig: Array<RouteRecordRaw> = [
   {
@@ -42,6 +43,12 @@ export const routesConfig: Array<RouteRecordRaw> = [
     path: "/profile",
     name: "profile",
     component: ProfilePage,
+    beforeEnter: async () => {},
+  },
+  {
+    path: "/plans",
+    name: "plans",
+    component: BuyTokenPage,
     beforeEnter: async () => {},
   },
 ];
