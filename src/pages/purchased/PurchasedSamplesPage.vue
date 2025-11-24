@@ -2,9 +2,9 @@
 <template>
   <page-content
     title="Купленные семплы"
-    description=" "
+    description="Ваша библиотека семплов"
   >
-    <purchased-samples-table v-if="purchasedSamples.length" />
+    <purchased-samples-table v-if="hasSamples" />
 
     <div
       v-else
@@ -21,11 +21,15 @@
 import PageContent from "@/components/pageContent/PageContent.vue";
 import PurchasedSamplesTable from "@/components/purchased/purchasedSamplesTable.vue";
 
-import { onMounted } from "vue";
+import { computed, onMounted } from "vue";
+import { storeToRefs } from "pinia";
 import { usePurchasedSamplesStore } from "@/stores/purchasedSamples/store.ts";
 
 const purchasedStore = usePurchasedSamplesStore();
-const { purchasedSamples, getPurchasedSamples } = purchasedStore;
+const { purchasedSamples } = storeToRefs(purchasedStore);
+const { getPurchasedSamples } = purchasedStore;
+
+const hasSamples = computed(() => purchasedSamples.value.length > 0);
 
 onMounted(async () => {
   await getPurchasedSamples();
