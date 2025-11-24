@@ -36,13 +36,13 @@ export const usePaymentStore = defineStore("payment", () => {
 
     await fetching({
       amount: amount.value,
-      return_uri: "http://82.202.137.174/profile",
+      return_uri: `${location.origin}/profile`,
     });
 
     console.log("ССЫЛКА ПЛАТЕЖ", data);
 
     if (isSuccess.value && data.value) {
-      window.open(data.value, "_blank");
+      window.open(data.value.url, "_blank");
     }
   };
 

@@ -3,6 +3,10 @@ import { useAxios } from "@/api/useAxios.ts";
 import type { AxiosInstance } from "axios";
 import type { ISampleTile } from "@/stores/samples/types.ts";
 
+interface IPaymentUrl {
+  url: string;
+}
+
 interface PurchasedTrack {
   id: string;
   sampleId: string;
@@ -13,7 +17,7 @@ interface PurchasedTrack {
 
 export const paymentApi = (instance: AxiosInstance) => ({
   setNewPayment() {
-    return useAxios<string>(instance).post("payments/new");
+    return useAxios<IPaymentUrl>(instance).post("payments/new");
   },
 
   buyTheSample(sampleId: string) {
