@@ -6,4 +6,6 @@ export interface IProps {
 
 export interface IEmits {
   (e: "download"): void;
+
+  (e: "purchase"): void;
 }

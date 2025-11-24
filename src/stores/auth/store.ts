@@ -2,7 +2,7 @@ import { ref } from "vue";
 import router from "@/router";
 import { defineStore } from "pinia";
 import { externalApi } from "@/api/api.ts";
-import { checkHasToken, setUserToken } from "@/api/helper.ts";
+import { checkHasToken, clearToken, setUserToken } from "@/api/helper.ts";
 
 export const useAuthStore = defineStore("auth", () => {
   const login = ref<string>("");
@@ -60,6 +60,12 @@ export const useAuthStore = defineStore("auth", () => {
     password.value = "";
   };
 
+  const leaveAccount = () => {
+    reset();
+    clearToken();
+    window.location.reload();
+  };
+
   return {
     login,
     password,
@@ -68,5 +74,6 @@ export const useAuthStore = defineStore("auth", () => {
     registerUser,
     reset,
     initializeApp,
+    leaveAccount,
   };
 });

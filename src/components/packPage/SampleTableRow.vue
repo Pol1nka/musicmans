@@ -60,16 +60,20 @@
     <!-- Actions -->
     <div class="col col-actions d-flex ai-center gap-8">
       <button
+        v-if="!sample.download_url"
         class="icon-btn"
-        @click.stop="downloadSample(sample)"
+        @click.stop="handleBuySample"
       >
-        <download-icon />
+        <i class="bi bi-cart-plus" />
       </button>
 
       <button
-        v-if="false"
+        v-else-if="sample.download_url"
         class="icon-btn"
-      ></button>
+        @click.stop="handleDownload"
+      >
+        <download-icon />
+      </button>
     </div>
   </div>
 </template>
@@ -93,7 +97,13 @@ interface IProps {
 
 const props = defineProps<IProps>();
 
-const { isTrackPlaying, playTrack, togglePlay, isTrackCurrent: isCurrentTrack } = useAudioPlayer();
+const {
+  isTrackPlaying,
+  playTrack,
+  togglePlay,
+  isTrackCurrent: isCurrentTrack,
+  downloadTrack,
+} = useAudioPlayer();
 
 const paymentStore = usePaymentStore();
 
@@ -123,8 +133,12 @@ const toggleTrack = async (sample: ISampleTile) => {
   }
 };
 
-const downloadSample = async (sample: ISampleTile) => {
-  await paymentStore.buyCurrentSample(sample.id);
+const handleDownload = async () => {
+  if (props.sample) await downloadTrack(props.sample);
+};
+
+const handleBuySample = async () => {
+  if (props.sample) await paymentStore.buyCurrentSample(props.sample.id);
 };
 
 const formatDuration = (seconds: number): string => {

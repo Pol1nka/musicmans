@@ -10,6 +10,7 @@
         v-for="sample in filteredSamples"
         :key="sample.id"
         :sample
+        @purchase="getSamples"
       />
     </div>
   </page-content>

@@ -2,6 +2,7 @@ import { ref } from "vue";
 import { AxiosError } from "axios";
 import { unwrapRefParams } from "./helper.ts";
 
+import { useToast } from "primevue/usetoast";
 import type { AxiosInstance, Method } from "axios";
 import type { IOptions, TParamsObject } from "./types.ts";
 

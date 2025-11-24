@@ -102,7 +102,19 @@
 
     <!--   Секция доп действий -->
     <div class="d-flex ai-center">
-      <button class="icon-btn">
+      <button
+        v-if="!currentTrack.download_url"
+        class="icon-btn"
+        @click="handleBuySample"
+      >
+        <i class="bi bi-cart-plus" />
+      </button>
+
+      <button
+        v-else-if="currentTrack.download_url"
+        class="icon-btn"
+        @click="handleDownload"
+      >
         <download-icon />
       </button>
     </div>
@@ -120,6 +132,9 @@ import DownloadIcon from "@/assets/icons/DownloadIcon.vue";
 
 import { ref } from "vue";
 import { useAudioPlayer } from "@/composables/audioPlayer/audioPlayer";
+import { usePaymentStore } from "@/stores/payment/store.ts";
+
+const paymentStore = usePaymentStore();
 
 const {
   currentTrack,
@@ -136,6 +151,7 @@ const {
   playNextTrack,
   seekToPercent,
   setVolume,
+  downloadTrack,
 } = useAudioPlayer();
 
 const progressBar = ref<HTMLElement | null>(null);
@@ -169,6 +185,14 @@ const handlePrev = async () => {
 
 const handleNext = async () => {
   await playNextTrack();
+};
+
+const handleDownload = async () => {
+  if (currentTrack.value) await downloadTrack(currentTrack.value);
+};
+
+const handleBuySample = async () => {
+  if (currentTrack.value) await paymentStore.buyCurrentSample(currentTrack.value.id);
 };
 </script>
 

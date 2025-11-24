@@ -1,10 +1,19 @@
 <!-- pages/AlbumPage.vue -->
 <template>
   <page-content
-    title="Информация об альбоме"
+    title="Купленные семплы"
     description=" "
   >
-    <purchased-samples-table />
+    <purchased-samples-table v-if="purchasedSamples.length" />
+
+    <div
+      v-else
+      class="empty-payment d-flex flex-column jc-center ai-center p-24"
+    >
+      <i class="bi bi-clipboard2" />
+
+      <span class="empty-text"> Список семплов пуст </span>
+    </div>
   </page-content>
 </template>
 
@@ -16,7 +25,7 @@ import { onMounted } from "vue";
 import { usePurchasedSamplesStore } from "@/stores/purchasedSamples/store.ts";
 
 const purchasedStore = usePurchasedSamplesStore();
-const { getPurchasedSamples } = purchasedStore;
+const { purchasedSamples, getPurchasedSamples } = purchasedStore;
 
 onMounted(async () => {
   await getPurchasedSamples();
@@ -24,6 +33,15 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
+.empty-payment {
+  font-size: 64px;
+  color: white;
+}
+
+.empty-text {
+  font-size: 24px;
+}
+
 .album-header {
   padding: 24px 0;
   border-radius: 12px;

@@ -49,6 +49,16 @@
     <!--    действия-->
     <div class="d-flex ai-center jc-end">
       <button
+        v-if="!sample.download_url"
+        class="submit-btn outline"
+        @click="handleBuySample"
+      >
+        <i class="bi bi-cart-plus" />
+        Купить
+      </button>
+
+      <button
+        v-else-if="sample.download_url"
         class="submit-btn outline"
         @click="handleDownload"
       >
@@ -82,7 +92,8 @@ import type { IEmits, IProps } from "./types.ts";
 const props = defineProps<IProps>();
 const emit = defineEmits<IEmits>();
 
-const { isTrackPlaying, isTrackCurrent, isLoading, playTrack, togglePlay } = useAudioPlayer();
+const { isTrackPlaying, isTrackCurrent, isLoading, playTrack, togglePlay, downloadTrack } =
+  useAudioPlayer();
 
 const paymentStore = usePaymentStore();
 
@@ -110,7 +121,12 @@ const handleCardClick = async () => {
 
 const handleDownload = async () => {
   emit("download");
+  await downloadTrack(props.sample);
+};
+
+const handleBuySample = async () => {
   await paymentStore.buyCurrentSample(props.sample.id);
+  emit("purchase");
 };
 </script>
 

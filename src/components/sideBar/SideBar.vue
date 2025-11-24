@@ -61,6 +61,13 @@
     >
       <i class="bi bi-person-circle" />
     </nav-item>
+
+    <leave-account-tab
+      v-if="hasToken"
+      title="Выйти"
+    >
+      <i class="bi bi-arrow-return-left"></i>
+    </leave-account-tab>
   </div>
 </template>
 
@@ -68,8 +75,13 @@
 import NavItem from "@/components/sideBar/NavItem.vue";
 import NavChapter from "@/components/sideBar/NavChapter.vue";
 import logoComponent from "@/assets/icons/logoStartIcon.vue";
+import LeaveAccountTab from "@/components/sideBar/LeaveAccountTab.vue";
 
+import { ref, watch } from "vue";
 import router from "@/router";
+import { checkHasToken } from "@/api/helper.ts";
+import { storeToRefs } from "pinia";
+import { useAppStore } from "@/stores";
 
 import type { ISideBar } from "@/components/sideBar/types.ts";
 
@@ -77,9 +89,18 @@ withDefaults(defineProps<ISideBar>(), {
   width: "350px",
 });
 
+const appStore = useAppStore();
+const { currentPageName } = storeToRefs(appStore);
+
+const hasToken = ref<boolean>(false);
+
 const goToMainPage = async () => {
   await router.push({ name: "home" });
 };
+
+watch(currentPageName, () => {
+  hasToken.value = checkHasToken();
+});
 </script>
 <style scoped>
 .logo-container {
