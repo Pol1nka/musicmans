@@ -36,37 +36,6 @@ export const useUserStore = defineStore("user", () => {
     if (isPayments.value) {
       userPayments.value = payments.value ?? [];
     }
-
-    userPayments.value = [
-      {
-        amount: 123,
-        created_at: new Date().toString(),
-        description: "Описание платежа? ",
-        id: "1",
-        payment_status: "Оплачено",
-      },
-      {
-        amount: 456,
-        created_at: new Date().toString(),
-        description: "Описание платежа? ",
-        id: "3",
-        payment_status: "Отклонено",
-      },
-      {
-        amount: 789,
-        created_at: new Date().toString(),
-        description: "Описание платежа? ",
-        id: "4",
-        payment_status: "Отклонено",
-      },
-      {
-        amount: 989,
-        created_at: new Date().toString(),
-        description: "Описание платежа? ",
-        id: "5",
-        payment_status: "Оплачено",
-      },
-    ];
   };
 
   return {

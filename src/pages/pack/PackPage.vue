@@ -59,7 +59,7 @@ const { playTrack, setPlaylist } = useAudioPlayer();
 
 const packStore = usePackStore();
 const { packId, name, author, description } = storeToRefs(packStore);
-const { getCurrentPack, setPackData } = packStore;
+const { getCurrentPack } = packStore;
 
 const formatAllDuration = computed(() => formatTime(packStore.totalDurationPack));
 
@@ -75,60 +75,6 @@ onMounted(async () => {
   const albumId = route.params.id;
   packId.value = albumId as string;
   await getCurrentPack();
-
-  // Временные данные для примера
-  setPackData({
-    pack: {
-      author: "Songstarters",
-      created_at: "123",
-      description: "Collection of soul samples",
-      genre: "pop",
-      id: "1",
-      name: "Soul Loops & Samples",
-      updated_at: "123",
-    },
-    samples: [
-      {
-        author: "Songstarters",
-        created_at: "123",
-        description: "desc",
-        download_url: "http://localhost:5173/samples/testWAV2.wav",
-        duration: 1,
-        genre: "pop",
-        id: "3",
-        pack_id: "1",
-        size: 123,
-        title: "SLS_SS2_70_songstarter_resampled_soul_truc_C#min.wav",
-        updated_at: "",
-      },
-      {
-        author: "Songstarters",
-        created_at: "123",
-        description: "desc",
-        download_url: "http://localhost:5173/samples/testWAV2.wav",
-        duration: 100,
-        genre: "jazz",
-        id: "4",
-        pack_id: "1",
-        size: 123,
-        title: "SLS_SS2_74_songstarter_resampled_gospel_glory_F#min.wav",
-        updated_at: "",
-      },
-      {
-        author: "Songstarters",
-        created_at: "123",
-        description: "desc",
-        download_url: "http://localhost:5173/samples/testWAV2.wav",
-        duration: 1,
-        genre: "pop",
-        id: "5",
-        pack_id: "1",
-        size: 123,
-        title: "SLS_SS2_70_songstarter_resampled_soul_truc_C#min.wav",
-        updated_at: "",
-      },
-    ],
-  });
   // Устанавливаем плейлист
   setPlaylist(packStore.sortedSamples);
 });

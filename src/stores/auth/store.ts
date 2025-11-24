@@ -19,7 +19,7 @@ export const useAuthStore = defineStore("auth", () => {
     const { data, isSuccess, fetching } = externalApi.getUserRegister();
     try {
       await fetching({
-        login: login.value,
+        username: login.value,
         password: password.value,
       });
       if (isSuccess.value) {
@@ -37,7 +37,7 @@ export const useAuthStore = defineStore("auth", () => {
     const { data: userAuth, isSuccess: isAuth, fetching: getAuth } = externalApi.getUserAuth();
     try {
       await getAuth({
-        login: login.value,
+        username: login.value,
         password: password.value,
       });
       if (isAuth.value) {
@@ -67,5 +67,6 @@ export const useAuthStore = defineStore("auth", () => {
     loginUser,
     registerUser,
     reset,
+    initializeApp,
   };
 });

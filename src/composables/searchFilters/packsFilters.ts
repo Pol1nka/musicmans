@@ -1,4 +1,4 @@
-import { computed, ref } from "vue";
+import { computed, type Ref, ref } from "vue";
 
 import type { IPacks } from "@/stores/packs/types.ts";
 
@@ -10,7 +10,7 @@ interface FilterOptions {
   [key: string]: any;
 }
 
-export const usePacksFilter = (packs: IPacks[]) => {
+export const usePacksFilter = (packs: Ref<IPacks[]>) => {
   const filters = ref<FilterOptions>({
     searchQuery: "",
     genre: "",
@@ -30,7 +30,8 @@ export const usePacksFilter = (packs: IPacks[]) => {
   };
 
   const filteredPacks = computed(() => {
-    return packs.filter((pack) => {
+    console.log(packs.value);
+    return packs.value.filter((pack) => {
       return (
         matchesText(pack, filters.value.searchQuery || "") &&
         matchesGenre(pack, filters.value.genre || "")

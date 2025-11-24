@@ -9,7 +9,7 @@ export const unwrapRefParams = (params?: TParamsObject): Record<string, unknown>
 
 export const setUserToken = (token: string): void => {
   if (!token) return;
-  localStorage.setItem("token", JSON.stringify(token));
+  localStorage.setItem("token", token);
   console.log("токен установлен в хранилище");
 };
 
@@ -19,4 +19,8 @@ export const checkHasToken = (): boolean => {
 
 export const clearToken = (): void => {
   localStorage.removeItem("token");
+};
+
+export const getToken = (): string | null => {
+  return localStorage.getItem("token");
 };

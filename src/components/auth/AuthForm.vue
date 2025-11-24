@@ -24,7 +24,7 @@
           id="password-auth"
           v-model="password"
           name="password"
-          type="text"
+          type="password"
           placeholder="Введите пароль"
         >
           <lock-icon class="left-icon" />

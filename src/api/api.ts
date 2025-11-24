@@ -7,7 +7,7 @@ import { packsApi } from "@/api/endpoints/packs.ts";
 import { paymentApi } from "@/api/payment.ts";
 
 const instance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: import.meta.env.VITE_BASE_URL,
   timeout: BASE_TIMEOUT,
   headers: {
     "Content-Type": "application/json",

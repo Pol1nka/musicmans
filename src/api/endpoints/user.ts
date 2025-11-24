@@ -6,7 +6,7 @@ import type { IUserPayment } from "@/stores/user/types.ts";
 
 export const userApi = (instance: AxiosInstance) => ({
   getUserProfile() {
-    return useAxios<IUserProfile>(instance).post("profile/me");
+    return useAxios<IUserProfile>(instance).get("profile/me");
   },
 
   getUserPaymentsHistory() {

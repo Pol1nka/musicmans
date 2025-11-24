@@ -9,78 +9,23 @@ import { useSearchFilter } from "@/composables/searchFilters/searchFilter.ts";
 export const useSamplesStore = defineStore("samples", () => {
   const { setPlaylist } = useAudioPlayer();
 
-  const tracks = [
-    {
-      author: "А также автор с очень длинной фамилией",
-      created_at: "А также автор с очень длинной фамилией",
-      description: "desc",
-      download_url: "http://localhost:5173/samples/testWAV.wav",
-      duration: 5,
-      genre: "rock",
-      id: "1",
-      pack_id: "1",
-      size: 2049,
-      title: "Супер длинный текст названия",
-      updated_at: "",
-    },
-    {
-      author: "star",
-      created_at: "123",
-      description: "desc",
-      download_url: "http://localhost:5173/samples/testWAV2.wav",
-      duration: 11,
-      genre: "pop",
-      id: "2",
-      pack_id: "1",
-      size: 123,
-      title: "simple",
-      updated_at: "",
-    },
-    {
-      author: "ya2",
-      created_at: "123",
-      description: "desc",
-      download_url: "http://localhost:5173/samples/testWAV2.wav",
-      duration: 11,
-      genre: "jazz",
-      id: "3",
-      pack_id: "1",
-      size: 123,
-      title: "simple",
-      updated_at: "",
-    },
-    {
-      author: "yaaa3",
-      created_at: "123",
-      description: "desc",
-      download_url: "http://localhost:5173/samples/testWAV2.wav",
-      duration: 11,
-      genre: "hiphop",
-      id: "4",
-      pack_id: "1",
-      size: 123,
-      title: "simple",
-      updated_at: "",
-    },
-  ];
-  setPlaylist(tracks);
-
   //filters
   const genreFilter = ref<string>("");
   //samples
-  const samples = ref<ISampleTile[]>([...tracks]);
+  const samples = ref<ISampleTile[]>([]);
 
-  const { filters, filteredSamples, resetSearchFilters } = useSearchFilter(samples.value);
+  const { filters, filteredSamples, resetSearchFilters } = useSearchFilter(samples);
 
   const { data, fetching: getSamples } = externalApi.getAllSamples();
 
   watch(data, (newValue) => {
     if (newValue) {
-      samples.value = newValue ?? tracks;
-      setPlaylist(tracks);
+      samples.value = newValue ?? [];
+      console.log(samples.value);
+      setPlaylist(samples.value);
     }
 
-    setPlaylist(tracks);
+    setPlaylist(samples.value);
   });
 
   const $resetFilters = () => {

@@ -6,12 +6,24 @@
       <p class="info-desc">Все ваши транзакции и покупки токенов</p>
     </div>
 
-    <div class="d-flex flex-column gap-10">
+    <div
+      v-if="userPayments.length"
+      class="d-flex flex-column gap-10"
+    >
       <payment-row
         v-for="paymentPart in userPayments"
         :key="paymentPart.id"
         :payment="paymentPart"
       />
+    </div>
+
+    <div
+      v-else
+      class="empty-payment d-flex flex-column jc-center ai-center p-24"
+    >
+      <i class="bi bi-clipboard2" />
+
+      <span class="empty-text"> Список платежей пуст </span>
     </div>
   </div>
 </template>
@@ -45,5 +57,14 @@ const { userPayments } = storeToRefs(userStore);
   margin: 0;
   font-size: 14px;
   color: var(--light-text);
+}
+
+.empty-payment {
+  font-size: 64px;
+  color: white;
+}
+
+.empty-text {
+  font-size: 24px;
 }
 </style>

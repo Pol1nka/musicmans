@@ -1,4 +1,4 @@
-import { computed, ref } from "vue";
+import { computed, type Ref, ref } from "vue";
 
 import type { ISampleTile } from "@/stores/samples/types.ts";
 
@@ -10,7 +10,8 @@ interface FilterOptions {
   [key: string]: any;
 }
 
-export const useSearchFilter = (samples: ISampleTile[]) => {
+export const useSearchFilter = (samples: Ref<ISampleTile[]>) => {
+  console.log(samples.value);
   const filters = ref<FilterOptions>({
     searchQuery: "",
     genre: "",
@@ -30,7 +31,8 @@ export const useSearchFilter = (samples: ISampleTile[]) => {
   };
 
   const filteredSamples = computed(() => {
-    return samples.filter((sample) => {
+    if (!samples.value) return [];
+    return samples.value.filter((sample) => {
       return (
         matchesText(sample, filters.value.searchQuery || "") &&
         matchesGenre(sample, filters.value.genre || "")

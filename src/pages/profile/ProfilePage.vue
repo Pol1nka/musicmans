@@ -36,7 +36,7 @@
       </profile-info-block>
     </div>
 
-    <payments-history-container class="flex-1" />
+    <payments-history-container />
   </page-content>
 </template>
 
