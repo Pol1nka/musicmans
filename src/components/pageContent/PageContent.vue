@@ -21,6 +21,10 @@ defineProps<IProps>();
 </script>
 
 <style scoped lang="scss">
+.page-container {
+  box-sizing: border-box;
+}
+
 .desc {
   font-size: 18px;
   line-height: 18px;

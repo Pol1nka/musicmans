@@ -5,12 +5,24 @@
   >
     <search-packs-panel />
 
-    <div class="cards-container">
+    <div
+      v-if="filteredPacks.length"
+      class="cards-container"
+    >
       <pack-card
         v-for="pack in filteredPacks"
         :key="pack.id"
         :pack
       />
+    </div>
+
+    <div
+      v-else
+      class="empty-payment d-flex flex-column jc-center ai-center p-24"
+    >
+      <i class="bi bi-clipboard2" />
+
+      <span class="empty-text"> Список паков пуст </span>
     </div>
   </page-content>
 </template>
@@ -34,6 +46,15 @@ onBeforeMount(async () => {
 </script>
 
 <style scoped lang="scss">
+.empty-payment {
+  font-size: 64px;
+  color: white;
+}
+
+.empty-text {
+  font-size: 24px;
+}
+
 .cards-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(241px, 1fr));

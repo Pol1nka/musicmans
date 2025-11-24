@@ -30,12 +30,12 @@
     <!--      <i class="bi bi-journal-bookmark-fill" />-->
     <!--    </nav-item>-->
 
-    <nav-item
-      title="Загрузить"
-      route-name="upload"
-    >
-      <i class="bi bi-upload" />
-    </nav-item>
+    <!--    <nav-item-->
+    <!--      title="Загрузить"-->
+    <!--      route-name="upload"-->
+    <!--    >-->
+    <!--      <i class="bi bi-upload" />-->
+    <!--    </nav-item>-->
 
     <nav-item
       title="Мои звуки"
