@@ -1,11 +1,16 @@
 import { ref } from "vue";
 import { AxiosError } from "axios";
+import { storeToRefs } from "pinia";
 import { unwrapRefParams } from "./helper.ts";
+import { useAlertsStore } from "@/stores/alerts/store.ts";
 
 import type { AxiosInstance, Method } from "axios";
 import type { IOptions, TParamsObject } from "./types.ts";
 
 export const useAxios = <T>(instance: AxiosInstance, options?: IOptions) => {
+  const alertStore = useAlertsStore();
+  const { message, statusCode } = storeToRefs(alertStore);
+
   const data = ref<T | null>(null);
   const isLoading = ref<boolean>(false);
   const isSuccess = ref<boolean>(false);
@@ -36,6 +41,10 @@ export const useAxios = <T>(instance: AxiosInstance, options?: IOptions) => {
         if (error instanceof AxiosError) {
           // ошибка axios
           errorMessage.value = error.message;
+          if (!message.value) {
+            message.value = error.response?.data?.message ?? error.response?.data?.error;
+            statusCode.value = error.status ?? 500;
+          }
           console.error("Произошла ошибка Axios:", error);
         } else if (error instanceof Error) {
           // стандартная ошибка
