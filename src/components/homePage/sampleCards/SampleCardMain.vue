@@ -77,7 +77,7 @@ import { formatFileSize, formatTime } from "@/composables/audioPlayer/helplers.t
 const props = defineProps<IProps>();
 const emit = defineEmits<IEmits>();
 
-const { isTrackPlaying, isTrackCurrent, isLoading, playTrack, togglePlay } = useAudioPlayer();
+const { isTrackPlaying, isTrackCurrent, isLoading, playTrack, togglePlay, downloadTrack } = useAudioPlayer();
 
 const waveformData = computed(() => {
   return Array.from({ length: 25 }, () => Math.random() * 100);
@@ -103,8 +103,9 @@ const handleCardClick = async () => {
   }
 };
 
-const handleDownload = () => {
+const handleDownload = async () => {
   emit("download");
+  await downloadTrack(props.sample);
 };
 </script>
 

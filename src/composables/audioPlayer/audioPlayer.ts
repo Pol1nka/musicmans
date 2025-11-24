@@ -256,6 +256,39 @@ export const useAudioPlayer = () => {
     return currentTrack.value?.id === trackId;
   };
 
+  const downloadTrack = async (track: Track): Promise<void> => {
+    try {
+      if (!track.download_url) {
+        throw new Error("Нет ссылки на скачивание");
+      }
+
+      const response = await fetch(track.download_url);
+      if (!response.ok) {
+        throw new Error(`Ошибка загрузки: ${response.status}`);
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+
+      // Формируем красивое имя файла
+      const safeTitle = track.title.replace(/[^\w\s-]/g, "_");
+      const fileName = `${safeTitle || "track"}.mp3`;
+
+      link.href = url;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+
+      // Очистка
+      link.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Ошибка скачивания трека:", err);
+      error.value = "Не удалось скачать трек";
+    }
+  };
+
   return {
     //readonly для предотвращения прямой модификации
     currentTrack: readonly(currentTrack),
@@ -286,5 +319,6 @@ export const useAudioPlayer = () => {
     isTrackPlaying,
     isTrackCurrent,
     cleanup,
+    downloadTrack,
   };
 };

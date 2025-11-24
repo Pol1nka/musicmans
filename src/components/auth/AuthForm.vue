@@ -140,7 +140,7 @@ const authMethod = computed(() => (isRegister.value ? registerUser : loginUser))
   }
 
   &.filled {
-    color: white;
+    color: var(--dark-text);
     background-color: var(--accent-color);
   }
 }
