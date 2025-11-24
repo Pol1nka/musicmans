@@ -2,6 +2,7 @@ export interface ISampleTile {
   author: string;
   created_at: string;
   description: string;
+  listen_url: string;
   download_url: string;
   duration: number;
   genre: string;
@@ -10,4 +11,5 @@ export interface ISampleTile {
   size: number;
   title: string;
   updated_at: string;
+  price: number;
 }

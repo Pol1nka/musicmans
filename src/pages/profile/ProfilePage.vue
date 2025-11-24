@@ -60,7 +60,7 @@ const countTokens = computed<string>(() =>
 );
 
 const goToBuyTokens = async () => {
-  await router.push({ name: "payment" });
+  await router.push({ name: "plans" });
 };
 
 onBeforeMount(async () => {

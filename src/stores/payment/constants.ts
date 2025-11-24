@@ -2,16 +2,16 @@ export const PLANS_TEMPLATE = {
   INITIAL: {
     title: "Начальный",
     amount: 30000,
-    tokens: 100,
+    tokens: 3000,
   },
   MEDIUM: {
     title: "Популярный",
     amount: 60000,
-    tokens: 300,
+    tokens: 6000,
   },
   MAXIMUM: {
     title: "Продвинутый",
     amount: 100000,
-    tokens: 1000,
+    tokens: 10000,
   },
 };

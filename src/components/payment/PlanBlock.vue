@@ -48,6 +48,8 @@ const totalAmount = computed(() => formatRubles(props.plan.amount));
 
 <style scoped lang="scss">
 .profile-info-block {
+  cursor: pointer;
+
   min-width: 400px;
   max-width: 500px;
   border: 1px solid rgb(38 45 54);

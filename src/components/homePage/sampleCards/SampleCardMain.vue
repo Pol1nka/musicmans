@@ -33,7 +33,11 @@
       <div class="track-meta d-flex ai-center jc-between">
         <span>{{ trackDuration }}</span>
 
-        <span> {{ formatTrackSize }} </span>
+        <div class="price-track d-flex p-8 gap-4">
+          <span> {{ sample.price }} </span>
+
+          <i class="bi bi-currency-exchange icon"></i>
+        </div>
       </div>
     </div>
 
@@ -70,14 +74,17 @@ import PauseIcon from "@/assets/icons/PauseIcon.vue";
 
 import { computed } from "vue";
 import { useAudioPlayer } from "@/composables/audioPlayer/audioPlayer.ts";
+import { usePaymentStore } from "@/stores/payment/store.ts";
+import { formatTime } from "@/composables/audioPlayer/helplers.ts";
 
 import type { IEmits, IProps } from "./types.ts";
-import { formatFileSize, formatTime } from "@/composables/audioPlayer/helplers.ts";
 
 const props = defineProps<IProps>();
 const emit = defineEmits<IEmits>();
 
-const { isTrackPlaying, isTrackCurrent, isLoading, playTrack, togglePlay, downloadTrack } = useAudioPlayer();
+const { isTrackPlaying, isTrackCurrent, isLoading, playTrack, togglePlay } = useAudioPlayer();
+
+const paymentStore = usePaymentStore();
 
 const waveformData = computed(() => {
   return Array.from({ length: 25 }, () => Math.random() * 100);
@@ -91,8 +98,6 @@ const isCurrentTrackLoading = computed(() => {
   return isTrackCurrent(props.sample.id) && isLoading.value;
 });
 
-const formatTrackSize = computed(() => formatFileSize(props.sample.size));
-
 const trackDuration = computed(() => formatTime(props.sample.duration));
 
 const handleCardClick = async () => {
@@ -105,11 +110,18 @@ const handleCardClick = async () => {
 
 const handleDownload = async () => {
   emit("download");
-  await downloadTrack(props.sample);
+  await paymentStore.buyCurrentSample(props.sample.id);
 };
 </script>
 
 <style scoped lang="scss">
+.price-track {
+  border-radius: 9999px;
+  font-size: 12px;
+  color: var(--accent-color);
+  background: rgb(141 151 165 / 30%);
+}
+
 .waveform-overlay {
   position: absolute;
   z-index: 2;

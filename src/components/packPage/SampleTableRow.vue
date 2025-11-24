@@ -83,6 +83,7 @@ import PauseIcon from "@/assets/icons/PauseIcon.vue";
 
 import { computed } from "vue";
 import { useAudioPlayer } from "@/composables/audioPlayer/audioPlayer.ts";
+import { usePaymentStore } from "@/stores/payment/store.ts";
 
 import type { ISampleTile } from "@/stores/samples/types.ts";
 
@@ -93,6 +94,8 @@ interface IProps {
 const props = defineProps<IProps>();
 
 const { isTrackPlaying, playTrack, togglePlay, isTrackCurrent: isCurrentTrack } = useAudioPlayer();
+
+const paymentStore = usePaymentStore();
 
 const waveformData = computed(() => {
   const seed = Number(props.sample.id);
@@ -120,12 +123,8 @@ const toggleTrack = async (sample: ISampleTile) => {
   }
 };
 
-const downloadSample = (sample: ISampleTile) => {
-  console.log("Download:", sample.id);
-  const link = document.createElement("a");
-  link.href = sample.download_url;
-  link.download = `${sample.title}.wav`;
-  link.click();
+const downloadSample = async (sample: ISampleTile) => {
+  await paymentStore.buyCurrentSample(sample.id);
 };
 
 const formatDuration = (seconds: number): string => {

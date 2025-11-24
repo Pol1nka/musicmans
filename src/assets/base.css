@@ -101,7 +101,7 @@ input::-webkit-inner-spin-button {
 }
 
 .gap-4 {
-  gap: 4px;
+  gap: 4px !important;
 }
 
 .jc-start {

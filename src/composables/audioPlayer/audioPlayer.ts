@@ -5,6 +5,7 @@ interface Track {
   author: string;
   created_at: string;
   description: string;
+  listen_url: string;
   download_url: string;
   duration: number;
   genre: string;
@@ -13,6 +14,7 @@ interface Track {
   size: number;
   title: string;
   updated_at: string;
+  price: number;
 }
 
 const currentTrack = ref<Track | null>(null);
@@ -130,7 +132,7 @@ export const useAudioPlayer = () => {
 
       currentTrackIndex.value = findTrackIndex(track.id);
 
-      console.log("Loading track:", track.title, track.download_url);
+      console.log("Loading track:", track.title, track.listen_url);
 
       // audio напрямую с url
       audio.value = new Audio();
@@ -143,7 +145,7 @@ export const useAudioPlayer = () => {
       audio.value.addEventListener("ended", handleEnded);
       audio.value.addEventListener("error", handleError);
 
-      audio.value.src = track.download_url;
+      audio.value.src = track.listen_url;
 
       await new Promise<void>((resolve, reject) => {
         const timeout = setTimeout(() => {
