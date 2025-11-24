@@ -37,6 +37,13 @@
       <i class="bi bi-upload" />
     </nav-item>
 
+    <nav-item
+      title="Мои звуки"
+      route-name="purchased"
+    >
+      <i class="bi bi-music-note-beamed"></i>
+    </nav-item>
+
     <nav-chapter title="ТОКЕНЫ" />
 
     <nav-item

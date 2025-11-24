@@ -7,7 +7,7 @@ interface IPaymentUrl {
   url: string;
 }
 
-interface PurchasedTrack {
+export interface PurchasedTrack {
   id: string;
   sampleId: string;
   sample: ISampleTile;
@@ -22,5 +22,9 @@ export const paymentApi = (instance: AxiosInstance) => ({
 
   buyTheSample(sampleId: string) {
     return useAxios<PurchasedTrack>(instance).post(`samples/${sampleId}/purchase`);
+  },
+
+  getPurchasedSamples() {
+    return useAxios<PurchasedTrack[]>(instance).get("purchases");
   },
 });
