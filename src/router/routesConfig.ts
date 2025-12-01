@@ -6,6 +6,7 @@ import AllPacksPage from "@/pages/allPacks/AllPacksPage.vue";
 import ProfilePage from "@/pages/profile/ProfilePage.vue";
 import BuyTokenPage from "@/pages/payment/BuyTokenPage.vue";
 import PurchasedSamplesPage from "@/pages/purchased/PurchasedSamplesPage.vue";
+import AddNewSamplePage from "@/pages/addNewSample/AddNewSamplePage.vue";
 
 import type { RouteRecordRaw } from "vue-router";
 
@@ -56,6 +57,12 @@ export const routesConfig: Array<RouteRecordRaw> = [
     path: "/purchased",
     name: "purchased",
     component: PurchasedSamplesPage,
+    beforeEnter: async () => {},
+  },
+  {
+    path: "/create-sample",
+    name: "sample",
+    component: AddNewSamplePage,
     beforeEnter: async () => {},
   },
 ];

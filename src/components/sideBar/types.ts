@@ -6,7 +6,8 @@ type TRoutes =
   | "profile"
   | "packs"
   | "plans"
-  | "purchased";
+  | "purchased"
+  | "sample";
 
 export interface INavItem {
   title: string;

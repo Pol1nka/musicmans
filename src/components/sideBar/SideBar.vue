@@ -44,6 +44,13 @@
       <i class="bi bi-music-note-beamed"></i>
     </nav-item>
 
+    <nav-item
+      title="Загрузить"
+      route-name="sample"
+    >
+      <i class="bi bi-upload" />
+    </nav-item>
+
     <nav-chapter title="ТОКЕНЫ" />
 
     <nav-item

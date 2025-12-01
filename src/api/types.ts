@@ -24,3 +24,11 @@ export interface INewPayment {
   amount: number;
   return_uri: string;
 }
+
+export interface IDownloadUrl {
+  download_url: string;
+}
+
+export interface IUuid {
+  uuid: string;
+}
