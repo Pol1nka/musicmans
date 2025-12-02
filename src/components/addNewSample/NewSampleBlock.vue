@@ -67,7 +67,15 @@
           name="demo[]"
           accept=".wav"
           choose-label="Выбрать WAV"
-          style="border: none; color: white; opacity: 1; background: var(--accent-light)"
+          style="
+            border: none;
+
+            font-weight: 200;
+            color: white;
+
+            opacity: 1;
+            background: var(--accent-light);
+          "
           :auto="false"
           :custom-upload="true"
           :multiple="false"
@@ -139,6 +147,7 @@ const clearTrack = () => {
 
 <style scoped lang="scss">
 .card {
+  font-weight: 200;
   color: white;
   background: #2a3646;
 }

@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import { defineStore, storeToRefs } from "pinia";
-import { externalApi } from "@/api/api.ts";
 import { useUserStore } from "@/stores/user/store.ts";
+import { externalApi } from "@/api/api.ts";
 
 export const useSampleStore = defineStore("sample", () => {
   const userStore = useUserStore();
@@ -22,25 +22,9 @@ export const useSampleStore = defineStore("sample", () => {
     fetching: createNewSample,
   } = externalApi.createSample();
 
-  const createSample = async () => {
-    try {
-      await createNewSample({
-        author: login.value,
-        description: description.value,
-        genre: genre.value,
-        price: Number(price.value),
-        title: title.value,
-      });
-      if (isSuccess.value && createdSampleUuid.value) {
-        createdSampleId.value = createdSampleUuid.value.uuid;
-        await saveFiles();
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const saveFiles = async () => {
+    const error = "";
+
     const { fetching: createUserSample } = externalApi.createSampleMusicFile(createdSampleId.value);
 
     if (!selectedFiles.value.length || !createdSampleUuid.value) {
@@ -52,6 +36,29 @@ export const useSampleStore = defineStore("sample", () => {
     });
     try {
       await createUserSample(formData);
+    } catch (error) {
+      error = "Произошла ошибка создания звука";
+      console.log(error);
+    }
+    return error;
+  };
+
+  const createSample = async () => {
+    try {
+      await createNewSample({
+        author: login.value,
+        description: description.value,
+        genre: genre.value,
+        price: Number(price.value),
+        title: title.value,
+      });
+      if (isSuccess.value && createdSampleUuid.value) {
+        createdSampleId.value = createdSampleUuid.value.uuid;
+        const error = await saveFiles();
+        if (!error) {
+          window.location.href = "/";
+        }
+      }
     } catch (error) {
       console.log(error);
     }

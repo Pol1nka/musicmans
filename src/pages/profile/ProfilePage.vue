@@ -3,7 +3,7 @@
     title="Профиль"
     description="Управляйте своим аккаунтом и просматривайте историю платежей"
   >
-    <div class="d-flex gap-24">
+    <div class="d-flex gap-24 jc-between">
       <profile-info-block
         title="Имя пользователя"
         description="Ваш логин в системе"
@@ -30,6 +30,27 @@
               @click="goToBuyTokens"
             >
               Купить токены →
+            </button>
+          </div>
+        </template>
+      </profile-info-block>
+
+      <profile-info-block
+        title="Вывод средств"
+        description="Доступные средства для вывода"
+        main-info-content="0"
+      >
+        <template #icon>
+          <i class="bi bi-coin icon"></i>
+        </template>
+
+        <template #action>
+          <div class="d-flex ai-center jc-end">
+            <button
+              class="submit-btn outline"
+              @click="goToBuyTokens"
+            >
+              Вывести средства
             </button>
           </div>
         </template>
@@ -109,6 +130,18 @@ onBeforeMount(async () => {
     &:hover {
       color: white;
       background-color: var(--accent-light);
+    }
+  }
+
+  &.outline {
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    background-color: transparent;
+    transition: all 0.1s linear;
+
+    &:hover {
+      color: white;
+      background: var(--accent-light);
     }
   }
 }

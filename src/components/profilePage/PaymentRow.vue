@@ -13,7 +13,7 @@
 
     <!--  Стоимость и статус   -->
     <div class="d-flex flex-column gap-10 ai-end">
-      <p class="payment-title">{{ payment.amount }} {{ ACTUAL_CURRENCY }}</p>
+      <p class="payment-title">{{ payment.amount / 100 }} {{ ACTUAL_CURRENCY }}</p>
 
       <genre-tag
         class="payment-status"
