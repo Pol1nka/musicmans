@@ -20,7 +20,7 @@ export const usePackStore = defineStore("pack", () => {
   const sortField = ref<keyof ISampleTile>("title");
   const sortDirection = ref<"asc" | "desc">("asc");
 
-  const { data, fetching: getCurrentPack } = externalApi.getCurrentPack(packId.value);
+  const { data, fetching: getCurrentPack } = externalApi.getCurrentPack(packId);
 
   const setPackData = (packData: IPack) => {
     author.value = packData.pack.author ?? "";

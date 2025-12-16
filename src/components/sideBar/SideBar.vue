@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex h-100 flex-column p-24 gap-8 sidebar">
+  <div class="d-flex h-100 flex-column p-24 gap-16 sidebar">
     <div
       class="d-flex ai-center jc-center logo-container"
       @click="goToMainPage"

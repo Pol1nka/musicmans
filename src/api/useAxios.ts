@@ -7,6 +7,8 @@ import { useAlertsStore } from "@/stores/alerts/store.ts";
 import type { AxiosInstance, Method } from "axios";
 import type { IOptions, TParamsObject } from "./types.ts";
 
+type TArgumentUrl = string | (() => string);
+
 export const useAxios = <T>(instance: AxiosInstance, options?: IOptions) => {
   const alertStore = useAlertsStore();
   const { message, statusCode } = storeToRefs(alertStore);
@@ -17,7 +19,7 @@ export const useAxios = <T>(instance: AxiosInstance, options?: IOptions) => {
   const isError = ref<boolean>(false);
   const errorMessage = ref<string>("");
 
-  const createFetch = (url: string, method: Uppercase<Method>, params?: TParamsObject) => {
+  const createFetch = (url: TArgumentUrl, method: Uppercase<Method>, params?: TParamsObject) => {
     const methodAxios = ref<Method>(method);
 
     const fetching = async (body?: Partial<unknown>): Promise<void> => {
@@ -27,7 +29,8 @@ export const useAxios = <T>(instance: AxiosInstance, options?: IOptions) => {
       isError.value = false;
       errorMessage.value = "";
       try {
-        const response = await instance(url, {
+        const resolvedUrl = typeof url === "function" ? url() : url;
+        const response = await instance(resolvedUrl, {
           method: methodAxios.value,
           ...(options?.customHeaders && { headers: options.customHeaders }),
           ...(body && { data: body }),
@@ -70,11 +73,13 @@ export const useAxios = <T>(instance: AxiosInstance, options?: IOptions) => {
     };
   };
 
-  const getFetch = (url: string, params?: TParamsObject) => createFetch(url, "GET", params);
-  const postFetch = (url: string, params?: TParamsObject) => createFetch(url, "POST", params);
-  const patchFetch = (url: string, params?: TParamsObject) => createFetch(url, "PATCH", params);
-  const putFetch = (url: string, params?: TParamsObject) => createFetch(url, "PUT", params);
-  const deleteFetch = (url: string, params?: TParamsObject) => createFetch(url, "DELETE", params);
+  const getFetch = (url: TArgumentUrl, params?: TParamsObject) => createFetch(url, "GET", params);
+  const postFetch = (url: TArgumentUrl, params?: TParamsObject) => createFetch(url, "POST", params);
+  const patchFetch = (url: TArgumentUrl, params?: TParamsObject) =>
+    createFetch(url, "PATCH", params);
+  const putFetch = (url: TArgumentUrl, params?: TParamsObject) => createFetch(url, "PUT", params);
+  const deleteFetch = (url: TArgumentUrl, params?: TParamsObject) =>
+    createFetch(url, "DELETE", params);
 
   return {
     get: getFetch,

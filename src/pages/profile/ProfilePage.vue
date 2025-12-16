@@ -38,7 +38,7 @@
       <profile-info-block
         title="Вывод средств"
         description="Доступные средства для вывода"
-        main-info-content="0"
+        :main-info-content="countTokens"
       >
         <template #icon>
           <i class="bi bi-coin icon"></i>

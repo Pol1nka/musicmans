@@ -50,7 +50,6 @@ import router from "@/router";
 import type { IProps } from "@/components/allPacksPage/types.ts";
 
 const props = defineProps<IProps>();
-
 const handleCardClick = async () => {
   await router.push({ name: "pack", params: { id: props.pack.id } });
 };

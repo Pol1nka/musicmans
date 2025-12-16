@@ -73,7 +73,7 @@ const playAll = async () => {
 // Загрузка данных
 onMounted(async () => {
   const albumId = route.params.id;
-  packId.value = albumId as string;
+  packId.value = String(albumId);
   await getCurrentPack();
   // Устанавливаем плейлист
   setPlaylist(packStore.sortedSamples);

@@ -90,6 +90,7 @@ import { useAudioPlayer } from "@/composables/audioPlayer/audioPlayer.ts";
 import { usePaymentStore } from "@/stores/payment/store.ts";
 
 import type { ISampleTile } from "@/stores/samples/types.ts";
+import { usePackStore } from "@/stores/pack/store.ts";
 
 interface IProps {
   sample: ISampleTile;
@@ -106,6 +107,9 @@ const {
 } = useAudioPlayer();
 
 const paymentStore = usePaymentStore();
+
+const packStore = usePackStore();
+const { getCurrentPack } = packStore;
 
 const waveformData = computed(() => {
   const seed = Number(props.sample.id);
@@ -139,6 +143,7 @@ const handleDownload = async () => {
 
 const handleBuySample = async () => {
   if (props.sample) await paymentStore.buyCurrentSample(props.sample.id);
+  await getCurrentPack();
 };
 
 const formatDuration = (seconds: number): string => {

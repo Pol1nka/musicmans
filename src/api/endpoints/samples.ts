@@ -20,4 +20,8 @@ export const samplesApi = (instance: AxiosInstance) => ({
       },
     }).post(`samples/${sampleId}`);
   },
+
+  deleteSample(sampleId: string) {
+    return useAxios(instance).delete(`samples/${sampleId}`);
+  },
 });
